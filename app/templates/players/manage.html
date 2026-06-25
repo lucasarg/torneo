@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Players - Torneo{% endblock %}
+{% block content %}
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Players</p>
+      <h1>Player management</h1>
+      <p class="muted">Create players, assign teams, and keep roster details current.</p>
+    </div>
+  </section>
+
+  <section class="form-panel">
+    <div class="section-heading">
+      <h2>{{ 'Edit player' if mode == 'edit' else 'Create player' }}</h2>
+    </div>
+    <form method="POST" class="form-grid" action="{{ url_for('players.edit', player_id=editing.id, page=pagination.page) if mode=='edit' else url_for('players.list_create') }}">
+      {{ form.hidden_tag() }}
+      <div class="field">
+        {{ form.name.label }}
+        {{ form.name(size=32) }}
+        {% for e in form.name.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="field">
+        {{ form.position.label }}
+        {{ form.position(size=16) }}
+        {% for e in form.position.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="field">
+        {{ form.age.label }}
+        {{ form.age(min=10, max=60) }}
+        {% for e in form.age.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="field">
+        {{ form.team_id.label }}
+        {{ form.team_id() }}
+        {% for e in form.team_id.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="form-actions form-actions-full">
+        <button class="btn btn-primary" type="submit">{{ 'Update' if mode=='edit' else 'Create' }}</button>
+        {% if mode == 'edit' %}
+          <a class="btn btn-secondary" href="{{ url_for('players.list_create', page=pagination.page) }}">Cancel</a>
+        {% endif %}
+      </div>
+    </form>
+  </section>
+
+  <section class="content-section">
+    <div class="section-heading section-heading-row">
+      <h2>All players</h2>
+      <span class="muted">Page {{ pagination.page }} of {{ pagination.pages or 1 }}</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Position</th><th>Age</th><th>Team</th><th class="actions-col">Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for p in pagination.items %}
+          <tr>
+            <td><strong>{{ p.name }}</strong></td>
+            <td>{{ p.position or '-' }}</td>
+            <td>{{ p.age or '-' }}</td>
+            <td>{% if p.team %}<a class="entity-link" href="{{ url_for('teams.detail_team', team_id=p.team.id) }}">{{ p.team.name }}</a>{% else %}No team{% endif %}</td>
+            <td class="row-actions">
+              <a class="btn btn-secondary btn-small" href="{{ url_for('players.edit', player_id=p.id, page=pagination.page) }}">Edit</a>
+              <form method="POST" action="{{ url_for('players.delete', player_id=p.id, page=pagination.page) }}" onsubmit="return confirm('Delete this player?');">
+                <button class="btn btn-danger btn-small" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="empty-state">No players yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      {% if pagination.has_prev %}
+        <a class="btn btn-secondary btn-small" href="{{ url_for('players.list_create', page=pagination.prev_num) }}">Prev</a>
+      {% endif %}
+      <span>Page {{ pagination.page }} of {{ pagination.pages or 1 }}</span>
+      {% if pagination.has_next %}
+        <a class="btn btn-secondary btn-small" href="{{ url_for('players.list_create', page=pagination.next_num) }}">Next</a>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

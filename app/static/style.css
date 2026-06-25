@@ -1,0 +1,116 @@
+/* Background + base */
+body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* New gradient background */
+    background: linear-gradient(135deg, #f3f5ff 0%, #eef9f2 100%);
+    color: #333;
+}
+
+main {
+    padding: 1rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 14px;              /* softer card look */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Buttons */
+button, .btn {
+    padding: 0.55rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #111;           /* dark button by default */
+    color: #fff;
+    cursor: pointer;
+    transition: transform .04s ease, box-shadow .2s ease, background .2s;
+}
+button:hover, .btn:hover { transform: translateY(-1px); }
+button:active, .btn:active { transform: translateY(0); }
+a.btn { text-decoration: none; display: inline-block; }
+
+/* Links in content */
+main a { color: #1b5eeb; }
+main a:hover { text-decoration: underline; }
+
+/* Table polish */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 10px;
+    overflow: hidden; /* round corners */
+}
+th, td {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+th {
+    background: #f7f7fb;
+    text-align: left;
+    font-weight: 700;
+}
+tbody tr:hover { background: rgba(0,0,0,0.025); }
+
+/* Forms layout */
+form div { margin-bottom: 0.9rem; }
+input, select {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 10px;
+    width: min(420px, 100%);
+    outline: none;
+}
+input:focus, select:focus { border-color: #1b5eeb; box-shadow: 0 0 0 3px rgba(27,94,235,0.12); }
+
+/* Flash messages with subtle border */
+.flashes li {
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Navbar polish */
+nav {
+    background: rgba(17,17,17,0.95);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    padding: 0.65rem 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+nav a { color: #fff; text-decoration: none; font-weight: 600; opacity: .95; }
+nav a:hover { opacity: 1; text-decoration: underline; }
+
+/* Dark theme (applies when <html> has .theme-dark) */
+.theme-dark body {
+    background: radial-gradient(1200px 500px at 20% -10%, #10131a 0%, #0b0e14 30%, #06080d 100%);
+    color: #ddd;
+}
+.theme-dark main {
+    background: #0e131b;
+    color: #e6e6e6;
+    border-color: rgba(255,255,255,0.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.theme-dark nav { background: rgba(8,10,14,0.95); }
+.theme-dark table { border-color: rgba(255,255,255,0.06); }
+.theme-dark th { background: #121826; }
+.theme-dark tbody tr:hover { background: rgba(255,255,255,0.05); }
+.theme-dark input, .theme-dark select {
+    background: #0b0f16;
+    color: #eaeaea;
+    border-color: rgba(255,255,255,0.2);
+}
+.theme-dark input:focus, .theme-dark select:focus {
+    border-color: #8ab4ff; box-shadow: 0 0 0 3px rgba(138,180,255,0.15);
+}
+.theme-dark button, .theme-dark .btn {
+    background: #1f2937;
+    color: #f1f5f9;
+    border-color: rgba(255,255,255,0.14);
+}
+.theme-dark .flashes li { border-color: rgba(255,255,255,0.12); }

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Torneo{% endblock %}
+{% block content %}
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Dashboard</p>
+      <h1>Welcome back, {{ current_user.username }}</h1>
+      <p class="muted">A quick view of your tournament setup.</p>
+    </div>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="{{ url_for('players.list_create') }}">Manage players</a>
+      <a class="btn btn-secondary" href="{{ url_for('teams.create_team') }}">New team</a>
+    </div>
+  </section>
+
+  <section class="stat-grid" aria-label="Tournament overview">
+    <article class="stat-card">
+      <span class="stat-label">Teams</span>
+      <strong>{{ stats.teams }}</strong>
+    </article>
+    <article class="stat-card">
+      <span class="stat-label">Players</span>
+      <strong>{{ stats.players }}</strong>
+    </article>
+    <article class="stat-card">
+      <span class="stat-label">Without team</span>
+      <strong>{{ stats.free_players }}</strong>
+    </article>
+  </section>
+
+  <section class="content-section">
+    <div class="section-heading">
+      <h2>Quick actions</h2>
+    </div>
+    <div class="action-list">
+      <a href="{{ url_for('teams.list_teams') }}">Manage teams</a>
+      <a href="{{ url_for('teams.create_team') }}">Create team</a>
+      <a href="{{ url_for('players.list_create') }}">Manage players</a>
+    </div>
+  </section>
+{% endblock %}

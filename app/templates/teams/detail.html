@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ team.name }} - Torneo{% endblock %}
+{% block content %}
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Team detail</p>
+      <h1>{{ team.name }}</h1>
+      <p class="muted">{{ team.city or 'No city registered' }}</p>
+    </div>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="{{ url_for('teams.edit_team', team_id=team.id) }}">Edit team</a>
+      <a class="btn btn-secondary" href="{{ url_for('teams.list_teams') }}">Back to teams</a>
+    </div>
+  </section>
+
+  <section class="stat-grid stat-grid-two" aria-label="Team overview">
+    <article class="stat-card">
+      <span class="stat-label">Players</span>
+      <strong>{{ players|length }}</strong>
+    </article>
+    <article class="stat-card">
+      <span class="stat-label">City</span>
+      <strong class="stat-text">{{ team.city or '-' }}</strong>
+    </article>
+  </section>
+
+  <section class="content-section">
+    <div class="section-heading section-heading-row">
+      <h2>Roster</h2>
+      <a class="btn btn-secondary btn-small" href="{{ url_for('players.list_create') }}">Manage players</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Position</th><th>Age</th></tr>
+        </thead>
+        <tbody>
+          {% for player in players %}
+          <tr>
+            <td><strong>{{ player.name }}</strong></td>
+            <td>{{ player.position or '-' }}</td>
+            <td>{{ player.age or '-' }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="3" class="empty-state">No players assigned to this team yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

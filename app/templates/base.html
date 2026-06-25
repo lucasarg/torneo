@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Torneo{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=4">
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="{{ url_for('main.home') }}">
+          <span class="brand-mark">T</span>
+          <span>Torneo</span>
+        </a>
+        <div class="nav-links">
+          <a href="{{ url_for('main.home') }}">Home</a>
+          {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('teams.list_teams') }}">Teams</a>
+            <a href="{{ url_for('players.list_create') }}">Players</a>
+          {% endif %}
+        </div>
+        <div class="nav-actions">
+          <button id="themeToggle" class="btn btn-secondary" type="button">Theme</button>
+          {% if current_user.is_authenticated %}
+            <a class="btn btn-secondary" href="{{ url_for('auth.logout') }}">Logout</a>
+          {% else %}
+            <a class="btn btn-secondary" href="{{ url_for('auth.login') }}">Login</a>
+            <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Register</a>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+
+    <main class="app-main">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="flash flash-{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <script>
+      (function () {
+        const key = "torneo-theme";
+        const root = document.documentElement;
+        const saved = localStorage.getItem(key);
+        if (saved === "dark") root.classList.add("theme-dark");
+
+        const btn = document.getElementById("themeToggle");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            root.classList.toggle("theme-dark");
+            localStorage.setItem(key, root.classList.contains("theme-dark") ? "dark" : "light");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

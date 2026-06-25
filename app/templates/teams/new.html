@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit Team' if mode == 'edit' else 'New Team' }} - Torneo{% endblock %}
+{% block content %}
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Teams</p>
+      <h1>{{ 'Edit team' if mode == 'edit' else 'Create team' }}</h1>
+      <p class="muted">Keep team names and locations organized.</p>
+    </div>
+  </section>
+
+  <section class="form-panel">
+    <form method="POST" class="form-stack">
+      {{ form.hidden_tag() }}
+      <div class="field">
+        {{ form.name.label }}
+        {{ form.name(size=32) }}
+        {% for e in form.name.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="field">
+        {{ form.city.label }}
+        {{ form.city(size=32) }}
+        {% for e in form.city.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">{{ 'Update' if mode == 'edit' else 'Create' }}</button>
+        <a class="btn btn-secondary" href="{{ url_for('teams.list_teams') }}">Cancel</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

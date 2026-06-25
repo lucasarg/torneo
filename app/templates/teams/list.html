@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Teams - Torneo{% endblock %}
+{% block content %}
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Teams</p>
+      <h1>Team management</h1>
+      <p class="muted">Review squads, cities, and roster size.</p>
+    </div>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="{{ url_for('teams.create_team') }}">New team</a>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>City</th><th>Players</th><th class="actions-col">Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for t in teams %}
+          <tr>
+            <td><a class="entity-link" href="{{ url_for('teams.detail_team', team_id=t.id) }}"><strong>{{ t.name }}</strong></a></td>
+            <td>{{ t.city or "-" }}</td>
+            <td><span class="pill">{{ t.players|length }}</span></td>
+            <td class="row-actions">
+              <a class="btn btn-secondary btn-small" href="{{ url_for('teams.detail_team', team_id=t.id) }}">View</a>
+              <a class="btn btn-secondary btn-small" href="{{ url_for('teams.edit_team', team_id=t.id) }}">Edit</a>
+              <form method="POST" action="{{ url_for('teams.delete_team', team_id=t.id) }}" onsubmit="return confirm('Delete this team? Players will stay in the system without a team.');">
+                <button class="btn btn-danger btn-small" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="4" class="empty-state">No teams yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

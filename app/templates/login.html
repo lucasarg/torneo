@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Login - Torneo{% endblock %}
+{% block content %}
+  <section class="auth-panel">
+    <div class="section-heading">
+      <p class="eyebrow">Account</p>
+      <h1>Login</h1>
+    </div>
+    <form method="POST" class="form-stack">
+      {{ form.hidden_tag() }}
+      <div class="field">
+        {{ form.username.label }}
+        {{ form.username(size=32) }}
+        {% for e in form.username.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="field">
+        {{ form.password.label }}
+        {{ form.password(size=32) }}
+        {% for e in form.password.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      <div class="form-actions">{{ form.submit(class_="btn btn-primary") }}</div>
+    </form>
+    <p class="muted">No account yet? <a href="{{ url_for('auth.register') }}">Register here</a>.</p>
+  </section>
+{% endblock %}
